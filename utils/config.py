@@ -21,6 +21,7 @@ def seed_everything(seed=42):
 
 # global constants to import
 DATA_DIR = './data/'
+TRAINED_MODELS_DIR = './trained_models/'
 IMAGE_SIZE = 224
 NUM_CLASSES = 10
 RANDOM_SEED = 420

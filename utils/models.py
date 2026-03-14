@@ -6,64 +6,83 @@ from torchvision import models
 class BaselineCNN(nn.Module):
     def __init__(self, num_classes=10, dropout_rate=0.0):
         super(BaselineCNN, self).__init__()
+        num_classes = int(num_classes)
         
         self.features = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2), # -> 112x112
-            
-            # 2 convolutional block
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2), # -> 56x56
-            
-            # 3 convolutional block
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2), # -> 28x28
+            nn.Conv2d(3, 32, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
+            nn.Conv2d(32, 64, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
+            nn.Conv2d(64, 128, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),
         )
+        
+        flattened_size = int(128 * 28 * 28)
         
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Dropout(p=dropout_rate),
-            nn.Linear(128 * 28 * 28, 256),
+            nn.Dropout(p=float(dropout_rate)),
+            nn.Linear(flattened_size, 256),
             nn.ReLU(),
             nn.Linear(256, num_classes)
         )
 
     def forward(self, x):
-        x = self.features(x)
-        x = self.classifier(x)
-        return x
+        return self.classifier(self.features(x))
 
 # Model factory
-def get_model(model_name, num_classes=10, dropout_rate=0.0):
+# def get_model(model_name, num_classes=10, dropout_rate=0.0):
+#     if model_name == "baseline_cnn":
+#         return BaselineCNN(num_classes=num_classes, dropout_rate=dropout_rate)
+    
+#     elif model_name == "efficientnet_b0":
+#         # Model without pretrained weights
+#         model = models.efficientnet_b0(weights=None)
+        
+#         # last layer modification
+#         num_ftrs = model.classifier[1].in_features
+#         model.classifier = nn.Sequential(
+#             nn.Dropout(p=dropout_rate, inplace=True),
+#             nn.Linear(num_ftrs, num_classes)
+#         )
+#         return model
+    
+#     elif model_name == "efficientnet_b0_pretrained":
+#         # Model with pretrained weights
+#         model = models.efficientnet_b0(weights='IMAGENET1K_V1')
+        
+#         # last layer modification
+#         num_ftrs = model.classifier[1].in_features
+#         model.classifier = nn.Sequential(
+#             nn.Dropout(p=dropout_rate, inplace=True),
+#             nn.Linear(num_ftrs, num_classes)
+#         )
+#         return model
+    
+#     else:
+#         raise ValueError(f"Unknown model: {model_name}")
+    
+def get_model(model_name, config):
+    """
+    TUTAJ BYŁ BŁĄD: Musimy wyciągnąć wartości ze słownika config!
+    """
+    # Wyciągamy wartości, podając domyślne, jeśli ich nie ma w configu
+    num_classes = 10 
+    dropout = config.get("dropout", 0.0)
+
     if model_name == "baseline_cnn":
-        return BaselineCNN(num_classes=num_classes, dropout_rate=dropout_rate)
+        # PRZEKAZUJEMY WARTOŚCI, A NIE CAŁY SŁOWNIK 'config'
+        return BaselineCNN(num_classes=num_classes, dropout_rate=dropout)
     
-    elif model_name == "efficientnet_b0":
-        # Model without pretrained weights
-        model = models.efficientnet_b0(weights=None)
+    elif "efficientnet_b0" in model_name:
+        is_pretrained = "pretrained" in model_name
+        weights = 'IMAGENET1K_V1' if is_pretrained else None
         
-        # last layer modification
+        model = models.efficientnet_b0(weights=weights)
+        
         num_ftrs = model.classifier[1].in_features
         model.classifier = nn.Sequential(
-            nn.Dropout(p=dropout_rate, inplace=True),
-            nn.Linear(num_ftrs, num_classes)
-        )
-        return model
-    
-    elif model_name == "efficientnet_b0_pretrained":
-        # Model with pretrained weights
-        model = models.efficientnet_b0(weights='IMAGENET1K_V1')
-        
-        # last layer modification
-        num_ftrs = model.classifier[1].in_features
-        model.classifier = nn.Sequential(
-            nn.Dropout(p=dropout_rate, inplace=True),
+            nn.Dropout(p=float(dropout), inplace=True),
             nn.Linear(num_ftrs, num_classes)
         )
         return model
     
     else:
-        raise ValueError(f"Unknown model: {model_name}")
+        raise ValueError(f"Nieznany model: {model_name}")
