@@ -15,15 +15,17 @@ def seed_everything(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
     
-    try: 
-        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8" 
-    except Exception as e:
-        pass
+    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8" 
 
+    print(f"Full reproducibility with seed set at: {seed}")
 
-    print(f"full reproducibility with seed set at: {seed}")
+# global constants to import
+DATA_DIR = './data/'
+IMAGE_SIZE = 224
+NUM_CLASSES = 10
+RANDOM_SEED = 420
 
-# Statystyki specyficzne dla CINIC-10
+# CINIC-10 dataset statistics, for nromalization
 CINIC_MEAN = [0.47889522, 0.47227842, 0.43047404]
 CINIC_STD = [0.24205776, 0.23828046, 0.25874835]
 
