@@ -22,3 +22,20 @@ def seed_everything(seed=42):
 
 
     print(f"full reproducibility with seed set at: {seed}")
+
+# Statystyki specyficzne dla CINIC-10
+CINIC_MEAN = [0.47889522, 0.47227842, 0.43047404]
+CINIC_STD = [0.24205776, 0.23828046, 0.25874835]
+
+# experiments configuration
+EXPERIMENTS = {
+    # stage 1: 3 models, for future comparison
+    "stage_1": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "none"
+    },
+}
