@@ -31,6 +31,7 @@ CINIC_MEAN = [0.47889522, 0.47227842, 0.43047404]
 CINIC_STD = [0.24205776, 0.23828046, 0.25874835]
 
 # experiments configuration
+#models, epochs, lr, batch_size, optimizer, augmentation, scheduler, weight_decay, use_cutmix
 EXPERIMENTS = {
     # stage 1: 3 models, for future comparison
     "stage_1": {
@@ -40,5 +41,41 @@ EXPERIMENTS = {
         "batch_size": 64,
         "optimizer": "ADAM",
         "augmentations": "none"
+    },
+    "stage_2_stepLR": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "scheduler" : "StepLR"
+    },
+    "stage_2_MultiStepLR": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "scheduler" : "MultiStepLR"
+    },
+    "stage_2_CosineAnnealingLR": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "scheduler" : "CosineAnnealingLR"
+    },
+    "stage_2_ReduceLROnPlateau": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "scheduler" : "ReduceLROnPlateau"
     },
 }

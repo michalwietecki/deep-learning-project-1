@@ -28,41 +28,8 @@ class BaselineCNN(nn.Module):
         return self.classifier(self.features(x))
 
 # Model factory
-# def get_model(model_name, num_classes=10, dropout_rate=0.0):
-#     if model_name == "baseline_cnn":
-#         return BaselineCNN(num_classes=num_classes, dropout_rate=dropout_rate)
-    
-#     elif model_name == "efficientnet_b0":
-#         # Model without pretrained weights
-#         model = models.efficientnet_b0(weights=None)
-        
-#         # last layer modification
-#         num_ftrs = model.classifier[1].in_features
-#         model.classifier = nn.Sequential(
-#             nn.Dropout(p=dropout_rate, inplace=True),
-#             nn.Linear(num_ftrs, num_classes)
-#         )
-#         return model
-    
-#     elif model_name == "efficientnet_b0_pretrained":
-#         # Model with pretrained weights
-#         model = models.efficientnet_b0(weights='IMAGENET1K_V1')
-        
-#         # last layer modification
-#         num_ftrs = model.classifier[1].in_features
-#         model.classifier = nn.Sequential(
-#             nn.Dropout(p=dropout_rate, inplace=True),
-#             nn.Linear(num_ftrs, num_classes)
-#         )
-#         return model
-    
-#     else:
-#         raise ValueError(f"Unknown model: {model_name}")
     
 def get_model(model_name, config):
-    """
-    TUTAJ BYŁ BŁĄD: Musimy wyciągnąć wartości ze słownika config!
-    """
     # Wyciągamy wartości, podając domyślne, jeśli ich nie ma w configu
     num_classes = 10 
     dropout = config.get("dropout", 0.0)
