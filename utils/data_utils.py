@@ -15,13 +15,14 @@ def get_transforms(augment_type="basic"):
         T.Normalize(mean=CINIC_MEAN, std=CINIC_STD)
     ]
 
+    # no new images, some of them just get transformed (model only see the transformed versions) 
     if augment_type == "advanced":
         advanced_tf = [
             T.RandomHorizontalFlip(p=0.5),
             T.RandomGrayscale(p=0.2),
             T.RandomInvert(p=0.2),
-            T.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))
-        ]
+            T.RandomApply([T.GaussianBlur(kernel_size=5)], p=0.2)        
+            ]
         return T.Compose(advanced_tf + base_tf)
     
     return T.Compose(base_tf)
@@ -44,7 +45,7 @@ def get_dataloaders(config, split='train'):
         # random indices
         indices = torch.randperm(len(full_dataset))[:num_samples]
         dataset = Subset(full_dataset, indices)
-        print(f"Few-shot mode: Używam {num_samples} obrazów ({subset_ratio*100}% zbioru).")
+        print(f"Few-shot mode: Use {num_samples} images ({subset_ratio*100}% of all available training examples).")
     else:
         dataset = full_dataset
 
