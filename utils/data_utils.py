@@ -18,7 +18,7 @@ def get_transforms(augment_type="basic"):
     # no new images, some of them just get transformed (model only see the transformed versions) 
     if augment_type == "advanced":
         advanced_tf = [
-            T.RandomHorizontalFlip(p=0.5),
+            T.RandomHorizontalFlip(p=0.4),
             T.RandomGrayscale(p=0.2),
             T.RandomInvert(p=0.2),
             T.RandomApply([T.GaussianBlur(kernel_size=5)], p=0.2)        
@@ -51,9 +51,9 @@ def get_dataloaders(config, split='train'):
 
     loader = DataLoader(
         dataset, 
-        batch_size=batch_size, 
+        batch_size=batch_size,
         shuffle=(split == 'train'),
-        num_workers=2,
+        num_workers=4,
         pin_memory=True # for gpu optimization
     )
     
