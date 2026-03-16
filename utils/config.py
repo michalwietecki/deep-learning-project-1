@@ -53,8 +53,8 @@ EXPERIMENTS = {
         "scheduler" : "StepLR"
     },
         "stage_2_test_num_workers_4_batch_128": {
-        "models": ["baseline_cnn", "efficientnet_b0"],
-        "epochs": 1,
+        "models": ["baseline_cnn",],
+        "epochs": 2,
         "lr": 0.001,
         "batch_size": 128,
         "optimizer": "ADAM",
@@ -65,7 +65,7 @@ EXPERIMENTS = {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
         "epochs": 10,
         "lr": 0.001,
-        "batch_size": 64,
+        "batch_size": 128,
         "optimizer": "ADAM",
         "augmentations": "none",
         "scheduler" : "StepLR"
@@ -74,7 +74,7 @@ EXPERIMENTS = {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
         "epochs": 10,
         "lr": 0.001,
-        "batch_size": 64,
+        "batch_size": 128,
         "optimizer": "ADAM",
         "augmentations": "none",
         "scheduler" : "MultiStepLR"
@@ -83,7 +83,7 @@ EXPERIMENTS = {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
         "epochs": 10,
         "lr": 0.001,
-        "batch_size": 64,
+        "batch_size": 128,
         "optimizer": "ADAM",
         "augmentations": "none",
         "scheduler" : "CosineAnnealingLR"
@@ -92,7 +92,7 @@ EXPERIMENTS = {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
         "epochs": 10,
         "lr": 0.001,
-        "batch_size": 64,
+        "batch_size": 128,
         "optimizer": "ADAM",
         "augmentations": "none",
         "scheduler" : "ReduceLROnPlateau"
