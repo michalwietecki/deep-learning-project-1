@@ -20,7 +20,8 @@ def seed_everything(seed=42):
     print(f"Full reproducibility with seed set at: {seed}")
 
 # global constants to import
-DATA_DIR = './data/'
+#DATA_DIR = './data/'
+DATA_DIR = '/kaggle/input/datasets/mengcius/cinic10' #TEMPORAL CHANGE TO KAGGLE
 TRAINED_MODELS_DIR = './trained_models/'
 IMAGE_SIZE = 224
 NUM_CLASSES = 10
