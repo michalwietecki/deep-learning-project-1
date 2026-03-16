@@ -39,7 +39,7 @@ EXPERIMENTS = {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
         "epochs": 10,
         "lr": 0.001,
-        "batch_size": 64,
+        "batch_size": 128,
         "optimizer": "ADAM",
         "augmentations": "none"
     },
