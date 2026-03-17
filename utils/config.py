@@ -97,4 +97,12 @@ EXPERIMENTS = {
         "augmentations": "none",
         "scheduler" : "ReduceLROnPlateau"
     },
+    "stage_2_LR_0.003": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.003,
+        "batch_size": 128,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+    },
 }
