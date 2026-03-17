@@ -105,4 +105,12 @@ EXPERIMENTS = {
         "optimizer": "ADAM",
         "augmentations": "none",
     },
+        "stage_2_LR_0.0003": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.0003,
+        "batch_size": 128,
+        "optimizer": "ADAM",
+        "augmentations": "none",
+    },
 }
