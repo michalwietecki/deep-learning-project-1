@@ -120,8 +120,8 @@ EXPERIMENTS = {
         "batch_size": 128,
         "optimizer": "ADAM",
         "scheduler" : "CosineAnnealingLR",
-        "weight_decay": 0.000001,
-        "dropout": 0.5,
+        "weight_decay" : 0.0,
+        "dropout": 0.3,
     },
         "stage_3_wd": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -130,7 +130,7 @@ EXPERIMENTS = {
         "batch_size": 128,
         "optimizer": "ADAM",
         "scheduler" : "CosineAnnealingLR",
-        "weight_decay": 0.001,
+        "weight_decay": 1e-4,
         "dropout": 0.0,
     },
         "stage_3_mix_soft": {
@@ -140,8 +140,8 @@ EXPERIMENTS = {
         "batch_size": 128,
         "optimizer": "ADAM",
         "scheduler" : "CosineAnnealingLR",
-        "weight_decay": 0.2,
-        "dropout": 0.0001,
+        "weight_decay": 1e-4,
+        "dropout": 0.3,
     },
         "stage_3_mix_hard": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -150,8 +150,8 @@ EXPERIMENTS = {
         "batch_size": 128,
         "optimizer": "ADAM",
         "scheduler" : "CosineAnnealingLR",
-        "weight_decay": 0.5,
-        "dropout": 0.001,
+        "weight_decay": 5e-4,
+        "dropout": 0.5,
     },
 
 }
