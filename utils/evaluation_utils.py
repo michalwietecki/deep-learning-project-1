@@ -38,7 +38,7 @@ def load_trained_model(filepath, model=None, plot_acc=False):
         print(f"File {filepath} does not exist.")
         return None
 
-    checkpoint = torch.load(filepath, map_location=torch.device('cpu'))
+    checkpoint = torch.load(filepath, map_location=torch.device('cpu'), weights_only=False)
     
     history = checkpoint.get('history')
     config = checkpoint.get('config')
