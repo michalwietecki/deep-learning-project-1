@@ -18,10 +18,10 @@ def get_transforms(augment_type="basic"):
     # no new images, some of them just get transformed (model only see the transformed versions) 
     if augment_type == "advanced":
         advanced_tf = [
-            T.RandomHorizontalFlip(p=0.4),
-            T.RandomGrayscale(p=0.2),
-            T.RandomInvert(p=0.2),
-            T.RandomApply([T.GaussianBlur(kernel_size=5)], p=0.2)        
+            T.RandomHorizontalFlip(p=0.5),
+            T.RandomGrayscale(p=0.1),
+            T.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+            T.RandomApply([T.GaussianBlur(kernel_size=3)], p=0.1)        
             ]
         return T.Compose(advanced_tf + base_tf)
     
