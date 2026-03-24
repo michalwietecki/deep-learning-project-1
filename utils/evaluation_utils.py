@@ -3,6 +3,8 @@ import os
 import matplotlib.pyplot as plt
 from utils.config import TRAINED_MODELS_DIR
 
+torch.serialization.add_safe_globals([numpy._core.multiarray.scalar])
+
 def load_all_scenarios(root_dir = TRAINED_MODELS_DIR, plot_acc = False):
     all_results = {}
 
