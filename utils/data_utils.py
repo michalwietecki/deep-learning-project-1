@@ -54,7 +54,7 @@ def get_dataloaders(config, split='train', num_workers=4):
         batch_size=batch_size,
         shuffle=(split == 'train'),
         num_workers=num_workers,
-        pin_memory=False # for gpu optimization
+        pin_memory=True # for gpu optimization
     )
     
     return loader
