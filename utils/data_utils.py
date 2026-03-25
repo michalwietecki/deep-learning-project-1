@@ -28,7 +28,7 @@ def get_transforms(augment_type="basic"):
     return T.Compose(base_tf)
 
 # specific data loaders for different stages of experiments
-def get_dataloaders(config, split='train'):
+def get_dataloaders(config, split='train', num_workers=4):
     aug_type = config.get("augmentations", "basic")
     batch_size = config.get("batch_size", 64)
     subset_ratio = config.get("subset_ratio", 1.0)
@@ -53,7 +53,7 @@ def get_dataloaders(config, split='train'):
         dataset, 
         batch_size=batch_size,
         shuffle=(split == 'train'),
-        num_workers=4,
+        num_workers=num_workers,
         pin_memory=True # for gpu optimization
     )
     
