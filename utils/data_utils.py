@@ -64,7 +64,6 @@ def apply_cutmix(inputs, targets, alpha=1.0):
         return inputs, targets, targets, 1.0
 
     indices = torch.randperm(inputs.size(0))
-    shuffled_inputs = inputs[indices]
     shuffled_targets = targets[indices]
 
     lam = np.random.beta(alpha, alpha)
@@ -82,7 +81,7 @@ def apply_cutmix(inputs, targets, alpha=1.0):
     bbx2 = np.clip(cx + cut_w // 2, 0, W)
     bby2 = np.clip(cy + cut_h // 2, 0, H)
 
-    inputs[:, :, bbx1:bbx2, bby1:bby2] = shuffled_inputs[:, :, bbx1:bbx2, bby1:bby2]
+    inputs[:, :, bbx1:bbx2, bby1:bby2] = inputs[indices, :, bbx1:bbx2, bby1:bby2]
     
     lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (W * H))
     
