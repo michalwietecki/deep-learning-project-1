@@ -177,6 +177,18 @@ EXPERIMENTS = {
         "augmentations": "basic",
         "use_cutmix": True
     },
+    "stage_4_mix_hard_cut_efficientnet_only": {
+        "models": ["efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 128,
+        "optimizer": "ADAM",
+        "scheduler" : "CosineAnnealingLR",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "augmentations": "basic",
+        "use_cutmix": True
+    },
     "stage_4_mix_hard_aug_cut": {
         "models": ["baseline_cnn", "efficientnet_b0_pretrained"],
         "epochs": 10,
