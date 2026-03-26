@@ -201,6 +201,19 @@ EXPERIMENTS = {
         "augmentations": "advanced",
         "use_cutmix": True
     },
+        "stage_4_mix_hard_aug_cut_grad_accumulation": {
+        "models": ["baseline_cnn", "efficientnet_b0_pretrained"],
+        "epochs": 10,
+        "lr": 0.001,
+        "batch_size": 32,
+        "optimizer": "ADAM",
+        "scheduler" : "CosineAnnealingLR",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "augmentations": "advanced",
+        "use_cutmix": True,
+        "grad_accumulation_steps": 4
+    },
     "stage_4_mix_soft_aug": {
         "models": ["efficientnet_b0"],
         "epochs": 10,
