@@ -73,6 +73,16 @@ def get_dataloaders(config, split='train', num_workers=2):
             indices.extend(chosen.tolist())
         dataset = Subset(full_dataset, indices)
         print(f"Reduced validation set: 1000 images per class, {len(indices)} total.")
+        loader = DataLoader(
+        dataset,
+        batch_size=batch_size if split == 'train' else 256,
+        shuffle=False,
+        num_workers=2,
+        pin_memory=True,
+        prefetch_factor=2
+
+        )
+        return loader
 
     else:
         dataset = full_dataset
