@@ -266,7 +266,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "none",
-        "subset_ratio": 0.1
+        "subset_ratio": 0.1,
+        "validation_set_size": "reduced"
     },
     "stage_5_1__1_percent": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -276,7 +277,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "none",
-        "subset_ratio": 0.01
+        "subset_ratio": 0.01,
+        "validation_set_size": "reduced"
     },
     "stage_5_1__50_per_class": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -286,7 +288,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "none",
-        "samples_per_class": 50
+        "samples_per_class": 50,
+        "validation_set_size": "reduced"
     },
     "stage_5_1__20_per_class": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -296,7 +299,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "none",
-        "samples_per_class": 20
+        "samples_per_class": 20,
+        "validation_set_size": "reduced"
     },
 
     # Stage FS-2: wpływ augmentacji przy małych danych
@@ -309,7 +313,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "advanced",
-        "subset_ratio": 0.1
+        "subset_ratio": 0.1,
+        "validation_set_size": "reduced"
     },
     "stage_5_2__1_percent_aug": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -319,7 +324,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "advanced",
-        "subset_ratio": 0.01
+        "subset_ratio": 0.01,
+        "validation_set_size": "reduced"
     },
     "stage_5_2__50_per_class_aug": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -329,7 +335,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "advanced",
-        "samples_per_class": 50
+        "samples_per_class": 50,
+        "validation_set_size": "reduced"
     },
     "stage_5_2__20_per_class_aug": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -339,7 +346,8 @@ EXPERIMENTS = {
         "scheduler" : "ReduceLROnPlateau",
         "optimizer": "ADAM",
         "augmentations": "advanced",
-        "samples_per_class": 20
+        "samples_per_class": 20,
+        "validation_set_size": "reduced"
     },
 
     # Stage FS-3: scheduler + regularyzacja przy małych danych
@@ -354,7 +362,8 @@ EXPERIMENTS = {
         "augmentations": "basic",
         "weight_decay": 5e-4,
         "dropout": 0.3,
-        "subset_ratio": 0.3
+        "subset_ratio": 0.3,
+        "validation_set_size": "reduced"
     },
     "stage_5_3__1_percent_reg": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -367,6 +376,7 @@ EXPERIMENTS = {
         "subset_ratio": 0.01,
         "weight_decay": 1e-4,
         "dropout": 0.2,
+        "validation_set_size": "reduced"
     },
     "stage_5_3__50_per_class_reg": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -379,6 +389,7 @@ EXPERIMENTS = {
         "samples_per_class": 50,
         "weight_decay": 1e-4,
         "dropout": 0.1,
+        "validation_set_size": "reduced"
     },
     "stage_5_3__20_per_class_reg": {
         "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
@@ -391,6 +402,7 @@ EXPERIMENTS = {
         "samples_per_class": 20,
         "weight_decay": 1e-4,
         "dropout": 0.1,
+        "validation_set_size": "reduced"
     },
 
     # Stage FS-4: lr przy małych danych - mniejszy lr może być stabilniejszy
@@ -404,7 +416,8 @@ EXPERIMENTS = {
         "scheduler": "ReduceLROnPlateau",
         "weight_decay": 5e-4,
         "dropout": 0.3,
-        "subset_ratio": 0.1
+        "subset_ratio": 0.1,
+        "validation_set_size": "reduced"
     },
     "stage_5_4__pre_1_percent_0.0003": {
         "models": ["efficientnet_b0_pretrained"],
@@ -416,7 +429,8 @@ EXPERIMENTS = {
         "scheduler": "ReduceLROnPlateau",
         "weight_decay": 5e-4,
         "dropout": 0.3,
-        "subset_ratio": 0.01
+        "subset_ratio": 0.01,
+        "validation_set_size": "reduced"
     },
     "stage_5_4__pre_50_per_class_0.0003": {
         "models": ["efficientnet_b0_pretrained"],
@@ -428,7 +442,8 @@ EXPERIMENTS = {
         "scheduler": "ReduceLROnPlateau",
         "weight_decay": 5e-4,
         "dropout": 0.3,
-        "samples_per_class": 50
+        "samples_per_class": 50,
+        "validation_set_size": "reduced"
     },
         "stage_5_4__pre_20_per_class_0.0003": {
         "models": ["efficientnet_b0_pretrained"],
@@ -440,6 +455,7 @@ EXPERIMENTS = {
         "scheduler": "ReduceLROnPlateau",
         "weight_decay": 5e-4,
         "dropout": 0.3,
-        "samples_per_class": 20
+        "samples_per_class": 20,
+        "validation_set_size": "reduced"
     },
 }

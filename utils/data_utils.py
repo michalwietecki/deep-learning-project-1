@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 # constannts from config file
-from utils.config import DATA_DIR, CINIC_MEAN, CINIC_STD, IMAGE_SIZE
+from utils.config import DATA_DIR, CINIC_MEAN, CINIC_STD, IMAGE_SIZE, RANDOM_SEED
 
 def get_transforms(augment_type="basic"):
     base_tf = [
@@ -33,13 +33,13 @@ def get_dataloaders(config, split='train', num_workers=2):
     batch_size = config.get("batch_size", 64)
     subset_ratio = config.get("subset_ratio", 1.0)
     samples_per_class = config.get("samples_per_class", None)
+    validation_set_size = config.get("validation_set_size", "full")
 
     transform = get_transforms(aug_type)
     path = os.path.join(DATA_DIR, split)
     full_dataset = torchvision.datasets.ImageFolder(root=path, transform=transform)
 
     if split == 'train' and samples_per_class is not None:
-        # n samples per class, balanced across all classes
         targets = np.array(full_dataset.targets)
         indices = []
         for cls in range(len(full_dataset.classes)):
@@ -54,23 +54,32 @@ def get_dataloaders(config, split='train', num_workers=2):
         targets = torch.tensor(full_dataset.targets)
         num_classes = len(torch.unique(targets))
         num_samples_per_class = int(len(full_dataset) * subset_ratio / num_classes)
-        
         indices = []
         for class_idx in range(num_classes):
             class_indices = torch.where(targets == class_idx)[0]
             perm = torch.randperm(len(class_indices))[:num_samples_per_class]
             indices.append(class_indices[perm])
-        
         indices = torch.cat(indices)
         dataset = Subset(full_dataset, indices)
-        num_samples = len(indices)
-        print(f"Few-shot mode (stratified): {num_samples} images ({subset_ratio*100}% of training set), {num_samples_per_class} per class.")
+        print(f"Few-shot mode (stratified): {len(indices)} images ({subset_ratio*100}% of training set), {num_samples_per_class} per class.")
+
+    elif split == 'test' and validation_set_size == "reduced":
+        np.random.seed(RANDOM_SEED)
+        targets = np.array(full_dataset.targets)
+        indices = []
+        for cls in range(len(full_dataset.classes)):
+            cls_indices = np.where(targets == cls)[0]
+            chosen = np.random.choice(cls_indices, size=min(1000, len(cls_indices)), replace=False)
+            indices.extend(chosen.tolist())
+        dataset = Subset(full_dataset, indices)
+        print(f"Reduced validation set: 1000 images per class, {len(indices)} total.")
+
     else:
         dataset = full_dataset
 
     loader = DataLoader(
         dataset,
-        batch_size=batch_size,
+        batch_size=batch_size if split == 'train' else min(batch_size * 2, 256),
         shuffle=(split == 'train'),
         num_workers=num_workers,
         pin_memory=True
