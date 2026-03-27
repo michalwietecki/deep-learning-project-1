@@ -75,7 +75,7 @@ def get_dataloaders(config, split='train', num_workers=2):
         print(f"Reduced validation set: 1000 images per class, {len(indices)} total.")
         loader = DataLoader(
         dataset,
-        batch_size=batch_size if split == 'train' else 256,
+        batch_size=64,
         shuffle=False,
         num_workers=2,
         pin_memory=True,
