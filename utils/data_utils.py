@@ -28,35 +28,53 @@ def get_transforms(augment_type="basic"):
     return T.Compose(base_tf)
 
 # specific data loaders for different stages of experiments
-def get_dataloaders(config, split='train', num_workers=4):
+def get_dataloaders(config, split='train', num_workers=2):
     aug_type = config.get("augmentations", "basic")
     batch_size = config.get("batch_size", 64)
     subset_ratio = config.get("subset_ratio", 1.0)
-    
+    samples_per_class = config.get("samples_per_class", None)
+
     transform = get_transforms(aug_type)
-    
     path = os.path.join(DATA_DIR, split)
     full_dataset = torchvision.datasets.ImageFolder(root=path, transform=transform)
-    
-    # few-shot mechanism
-    if split == 'train' and subset_ratio < 1.0:
-        num_samples = int(len(full_dataset) * subset_ratio)
-        
-        # random indices
-        indices = torch.randperm(len(full_dataset))[:num_samples]
+
+    if split == 'train' and samples_per_class is not None:
+        # n samples per class, balanced across all classes
+        targets = np.array(full_dataset.targets)
+        indices = []
+        for cls in range(len(full_dataset.classes)):
+            cls_indices = np.where(targets == cls)[0]
+            n = min(samples_per_class, len(cls_indices))
+            chosen = np.random.choice(cls_indices, size=n, replace=False)
+            indices.extend(chosen.tolist())
         dataset = Subset(full_dataset, indices)
-        print(f"Few-shot mode: Use {num_samples} images ({subset_ratio*100}% of all available training examples).")
+        print(f"Few-shot mode: {samples_per_class} images per class, {len(indices)} total.")
+
+    elif split == 'train' and subset_ratio < 1.0:
+        targets = torch.tensor(full_dataset.targets)
+        num_classes = len(torch.unique(targets))
+        num_samples_per_class = int(len(full_dataset) * subset_ratio / num_classes)
+        
+        indices = []
+        for class_idx in range(num_classes):
+            class_indices = torch.where(targets == class_idx)[0]
+            perm = torch.randperm(len(class_indices))[:num_samples_per_class]
+            indices.append(class_indices[perm])
+        
+        indices = torch.cat(indices)
+        dataset = Subset(full_dataset, indices)
+        num_samples = len(indices)
+        print(f"Few-shot mode (stratified): {num_samples} images ({subset_ratio*100}% of training set), {num_samples_per_class} per class.")
     else:
         dataset = full_dataset
 
     loader = DataLoader(
-        dataset, 
+        dataset,
         batch_size=batch_size,
         shuffle=(split == 'train'),
         num_workers=num_workers,
-        pin_memory=True # for gpu optimization
+        pin_memory=True
     )
-    
     return loader
 
 def apply_cutmix(inputs, targets, alpha=1.0):

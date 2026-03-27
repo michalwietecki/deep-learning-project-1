@@ -250,4 +250,196 @@ EXPERIMENTS = {
         "augmentations": "advanced",
         "use_cutmix": True
     },
+
+
+
+    # ========= stage 5
+
+
+    # Stage FS-1: baseline few-shot - jak bardzo spada jakość przy małych danych?
+    # Porównanie wszystkich 3 modeli przy tym samym ograniczeniu
+    "stage_5_1__10_percent": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 64,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "subset_ratio": 0.1
+    },
+    "stage_5_1__1_percent": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 32,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "subset_ratio": 0.01
+    },
+    "stage_5_1__50_per_class": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 16,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "samples_per_class": 50
+    },
+    "stage_5_1__20_per_class": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 8,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "none",
+        "samples_per_class": 20
+    },
+
+    # Stage FS-2: wpływ augmentacji przy małych danych
+    # Hipoteza: augmentacje powinny pomagać bardziej im mniej danych
+        "stage_5_2__10_percent_aug": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 64,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "subset_ratio": 0.1
+    },
+    "stage_5_2__1_percent_aug": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 32,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "subset_ratio": 0.01
+    },
+    "stage_5_2__50_per_class_aug": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 16,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "samples_per_class": 50
+    },
+    "stage_5_2__20_per_class_aug": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 8,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "samples_per_class": 20
+    },
+
+    # Stage FS-3: scheduler + regularyzacja przy małych danych
+    # Przy few-shot overfitting jest głównym problemem
+    "stage_5_3__10_percent_reg": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 64,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "basic",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "subset_ratio": 0.3
+    },
+    "stage_5_3__1_percent_reg": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 32,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "basic",
+        "subset_ratio": 0.01,
+        "weight_decay": 1e-4,
+        "dropout": 0.2,
+    },
+    "stage_5_3__50_per_class_reg": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 16,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "basic",
+        "samples_per_class": 50,
+        "weight_decay": 1e-4,
+        "dropout": 0.1,
+    },
+    "stage_5_3__20_per_class_reg": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 8,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "basic",
+        "samples_per_class": 20,
+        "weight_decay": 1e-4,
+        "dropout": 0.1,
+    },
+
+    # Stage FS-4: lr przy małych danych - mniejszy lr może być stabilniejszy
+    "stage_5_4__pre_10_percent_0.0003": {
+        "models": ["efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.0003,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "scheduler": "ReduceLROnPlateau",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "subset_ratio": 0.1
+    },
+    "stage_5_4__pre_1_percent_0.0003": {
+        "models": ["efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.0003,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "scheduler": "ReduceLROnPlateau",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "subset_ratio": 0.01
+    },
+    "stage_5_4__pre_50_per_class_0.0003": {
+        "models": ["efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.0003,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "scheduler": "ReduceLROnPlateau",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "samples_per_class": 50
+    },
+        "stage_5_4__pre_20_per_class_0.0003": {
+        "models": ["efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.0003,
+        "batch_size": 64,
+        "optimizer": "ADAM",
+        "augmentations": "advanced",
+        "scheduler": "ReduceLROnPlateau",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
+        "samples_per_class": 20
+    },
 }
