@@ -362,6 +362,19 @@ EXPERIMENTS = {
         "augmentations": "basic",
         "weight_decay": 5e-4,
         "dropout": 0.3,
+        "subset_ratio": 0.3,
+        "validation_set_size": "reduced"
+    },
+    "stage_5_3__10_percent_reg_true": {
+        "models": ["baseline_cnn", "efficientnet_b0", "efficientnet_b0_pretrained"],
+        "epochs": 30,
+        "lr": 0.001,
+        "batch_size": 64,
+        "scheduler" : "ReduceLROnPlateau",
+        "optimizer": "ADAM",
+        "augmentations": "basic",
+        "weight_decay": 5e-4,
+        "dropout": 0.3,
         "subset_ratio": 0.1,
         "validation_set_size": "reduced"
     },
