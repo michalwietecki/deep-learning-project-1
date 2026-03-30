@@ -1,5 +1,4 @@
 {
-    "dl_1_trained_models": {},
     "stage_1": {
         "baseline_cnn": {
             "history": {
