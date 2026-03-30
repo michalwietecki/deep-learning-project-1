@@ -1,0 +1,16 @@
+stage,mode,accuracy,f1,subset
+stage_4_mix_hard_aug_cut,baseline_cnn,57.75,0.5714,full data
+stage_4_mix_hard_aug_cut,efficientnet_b0,77.74,0.7755,full data
+stage_4_mix_hard_aug_cut,efficientnet_b0_pretrained,85.46,0.8542,full data
+stage_4_mix_hard_aug_cut,hard_voting,80.13,0.7997,full data
+stage_4_mix_hard_aug_cut,soft_voting,84.11,0.8401,full data
+stage_5_1__10_percent,baseline_cnn,40.23,0.4035,10% data
+stage_5_1__10_percent,efficientnet_b0,56.31,0.5649,10% data
+stage_5_1__10_percent,efficientnet_b0_pretrained,82.32,0.8232,10% data
+stage_5_1__10_percent,hard_voting,67.65,0.6773,10% data
+stage_5_1__10_percent,soft_voting,73.3,0.7333,10% data
+stage_5_3__20_per_class_reg,baseline_cnn,21.95,0.2132,20/class
+stage_5_3__20_per_class_reg,efficientnet_b0,25.96,0.2542,20/class
+stage_5_3__20_per_class_reg,efficientnet_b0_pretrained,52.19,0.5151,20/class
+stage_5_3__20_per_class_reg,hard_voting,37.03,0.3497,20/class
+stage_5_3__20_per_class_reg,soft_voting,46.35,0.4546,20/class
